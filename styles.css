@@ -30,9 +30,13 @@ body, body * { color: #f59e0b !important; }
 /* Hide theme toggles to enforce dark-only experience */
 #theme-toggle, #theme-toggle-mobile { display: none !important; }
 
-html { scroll-behavior: smooth; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
-body { background: #000000; color: var(--text); }
-.dark body { background: #000000; }
+html { scroll-behavior: smooth; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #000000 !important; }
+body { background: #000000 !important; color: var(--text); min-height: 100vh; }
+.dark body { background: #000000 !important; }
+
+/* Force black background on all main containers */
+main, section, div { background-color: transparent; }
+body > * { background-color: transparent; }
 
 /* NAVBAR - glass effect with subtle blur */
 header { background: linear-gradient(90deg, rgba(0,0,0,0.85), rgba(0,0,0,0.9)); }
@@ -46,9 +50,10 @@ h1 { font-family: 'Poppins', 'Inter', sans-serif; }
 .dark .hero-card { background: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(5,5,5,0.85)); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
 
 /* Primary Button */
-.btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-600)); color: #050505; padding: .55rem 1rem; border-radius: 10px; font-weight: 700; box-shadow: 0 8px 20px rgba(245,158,11,0.12); transition: transform .14s ease, box-shadow .14s ease; }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(245,158,11,0.25); }
-.btn-outline { border: 1px solid rgba(249,115,22,0.12); color: var(--accent); padding: .5rem .9rem; border-radius: 10px; }
+.btn-primary { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); padding: .55rem 1rem; border-radius: 10px; font-weight: 700; box-shadow: 0 8px 20px rgba(255,255,255,0.05); transition: transform .14s ease, box-shadow .14s ease, background .14s ease; }
+.btn-primary:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.15); box-shadow: 0 18px 40px rgba(255,255,255,0.12); }
+.btn-outline { border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff; padding: .5rem .9rem; border-radius: 10px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: background .14s ease; }
+.btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
 
 /* Card style used throughout */
 .card { background: var(--surface); border-radius: 14px; padding: 1.25rem; box-shadow: 0 8px 26px rgba(0,0,0,0.6); transition: transform .16s ease, box-shadow .16s ease; }
