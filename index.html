@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Portfolio</title>
+    <meta name="description" content="Personal portfolio - services, resume, projects and contact" />
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="antialiased text-gray-800 bg-gray-50 scroll-smooth">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <nav class="container mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="#home" class="font-bold text-xl">Vidumali Dahanayake</a>
+        <div class="hidden md:flex gap-6 items-center">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#resume" class="nav-link">Resume</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <!-- Theme toggle (desktop) -->
+          <button id="theme-toggle" class="ml-2 p-2 rounded-md border border-transparent hover:border-yellow-400 focus:outline-none" aria-label="Toggle theme">
+            <!-- icons will be swapped via JS -->
+            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3.5a.75.75 0 01.75-.75h0A.75.75 0 0111.5 3.5v1a.75.75 0 01-1.5 0v-1zM10 15.25a.75.75 0 01.75.75v1a.75.75 0 01-1.5 0v-1a.75.75 0 01.75-.75zM4.22 4.22a.75.75 0 011.06 0l.7.7a.75.75 0 11-1.06 1.06l-.7-.7a.75.75 0 010-1.06zM13.02 13.02a.75.75 0 011.06 0l.7.7a.75.75 0 11-1.06 1.06l-.7-.7a.75.75 0 010-1.06zM3.5 10a.75.75 0 01.75-.75h1a.75.75 0 010 1.5h-1A.75.75 0 013.5 10zM15.25 10a.75.75 0 01.75-.75h1a.75.75 0 010 1.5h-1a.75.75 0 01-.75-.75zM4.22 15.78a.75.75 0 010-1.06l.7-.7a.75.75 0 111.06 1.06l-.7.7a.75.75 0 01-1.06 0zM13.02 6.98a.75.75 0 010-1.06l.7-.7a.75.75 0 111.06 1.06l-.7.7a.75.75 0 01-1.06 0zM10 6.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg>
+            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700 hidden" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 116.707 2.707a7 7 0 1010.586 10.586z"/></svg>
+          </button>
+        </div>
+        <button id="btn-mobile" class="md:hidden p-2 rounded-md focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </nav>
+      <div id="mobile-menu" class="md:hidden px-6 pb-4 hidden">
+        <a href="#home" class="block py-2">Home</a>
+        <a href="#services" class="block py-2">Services</a>
+        <a href="#resume" class="block py-2">Resume</a>
+        <a href="#projects" class="block py-2">Projects</a>
+        <a href="#contact" class="block py-2">Contact</a>
+        <button id="theme-toggle-mobile" class="mt-3 w-full text-left py-2 border-t border-gray-100">Toggle theme</button>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+      <!-- Home / Hero -->
+      <section id="home" class="min-h-[70vh] flex flex-col md:flex-row items-center gap-8 py-12">
+        <div class="flex-1" data-aos="fade-right">
+          <p class="text-yellow-600 font-medium">Hello, I'm</p>
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mt-2"><span id="animated-name" class="animated-name">Vidumali Dahanayake</span><span class="text-yellow-500"></span></h1>
+          <h2 class="text-xl md:text-2xl text-gray-600 mt-2">
+  <span id="typing"></span><span class="border-r-2 border-gray-600 animate-pulse ml-1"></span>
+</h2>
+
+<script>
+  const roles = [
+    "Quality Assurance Engineer",
+    "Software Tester",
+    "Frontend Developer",
+    "Content Writer",
+    "Business Analyst",
+    "Software Engineer"
+  ];
+
+  const typingElement = document.getElementById("typing");
+  let roleIndex = 0;
+  let charIndex = 0;
+  let typingDelay = 100; // milliseconds per character
+  let erasingDelay = 50;
+  let delayBetweenRoles = 1500;
+
+  function typeRole() {
+    if (charIndex < roles[roleIndex].length) {
+      typingElement.textContent += roles[roleIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(typeRole, typingDelay);
+    } else {
+      setTimeout(eraseRole, delayBetweenRoles);
+    }
+  }
+
+  function eraseRole() {
+    if (charIndex > 0) {
+      typingElement.textContent = roles[roleIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(eraseRole, erasingDelay);
+    } else {
+      roleIndex = (roleIndex + 1) % roles.length; // move to next role
+      setTimeout(typeRole, typingDelay);
+    }
+  }
+
+  // Start the typing effect
+  typeRole();
+</script>
+<p class="mt-10 max-w-3xl md:text-2xl font-semibold gradient-text fade-in">
+  I build and test with purpose. From assuring quality and performance to shaping clean, engaging interfaces, I bring together design, development, and analysis to deliver meaningful digital experiences.
+</p>
+
+
+
+          <div class="mt-20 flex gap-4">
+            <a href="#projects" class="inline-flex items-center gap-18 bg-black text-yellow-400 px-4 py-2 rounded-md shadow hover:bg-gray-900 transition">See Projects</a>
+            <a href="#contact" class="inline-flex items-center gap-18 border border-yellow-600 text-yellow-600 px-4 py-2 rounded-md hover:bg-yellow-50 transition">Contact Me</a>
+            <a href="Vidumali_Dahanayake_Resume.pdf" download class="inline-flex items-center gap-18 bg-black text-yellow-400 px-4 py-2 rounded-md shadow hover:bg-gray-900 transition">Download CV</a>
+          </div>
+        <div class="mt-20 flex items-center gap-6">
+  <div class="flex items-center gap-3">
+    <div class="text-sm text-gray-500">Availability</div>
+    <div class="px-3 py-1 rounded-full text-sm text-white golden-glow-badge">
+      Open to work
+    </div>
+  </div>
+</div>
+
+        </div>
+
+<div class="flex-1 flex justify-center items-center" style="position: relative; min-height: 32rem;">
+  <!-- Decorative Floating Shapes -->
+  <!-- Circle Shapes -->
+  <div style="position: absolute; width: 3rem; height: 3rem; border-radius: 50%; background: rgba(255, 255, 0, 0.5); top: -1rem; left: -1rem; animation: float-shape 5s ease-in-out infinite alternate;"></div>
+  <div style="position: absolute; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 3px solid rgba(255, 255, 200, 0.7); top: 10%; right: -1.5rem; animation: float-shape 6s ease-in-out infinite alternate-reverse;"></div>
+  <div style="position: absolute; width: 2rem; height: 2rem; border-radius: 50%; background: rgba(255, 200, 0, 0.6); bottom: 5%; left: 5%; animation: float-shape 7s ease-in-out infinite alternate;"></div>
+  
+  <!-- Triangle Shapes -->
+  <div style="position: absolute; width: 2rem; height: 2rem; background: rgba(255, 192, 0, 0.6); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); bottom: -0.5rem; right: -0.5rem; animation: float-shape 6s ease-in-out infinite alternate-reverse;"></div>
+  <div style="position: absolute; width: 1.5rem; height: 1.5rem; background: rgba(255, 220, 100, 0.7); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); top: 20%; left: -1rem; animation: float-shape 5.5s ease-in-out infinite alternate;"></div>
+
+  <!-- Square/Abstract Shapes -->
+  <div style="position: absolute; width: 2rem; height: 2rem; background: rgba(255, 230, 150, 0.5); top: 25%; right: 10%; transform: rotate(45deg); animation: float-shape 8s ease-in-out infinite alternate-reverse;"></div>
+  <div style="position: absolute; width: 1.5rem; height: 1.5rem; background: rgba(255, 240, 180, 0.6); bottom: 20%; left: 15%; transform: rotate(30deg); animation: float-shape 7.5s ease-in-out infinite alternate;"></div>
+
+  <!-- Profile Picture with Neon Glow -->
+  <div style="
+        position: relative;
+        width: 18rem; 
+        height: 24rem; 
+        border-radius: 50% / 40%; 
+        overflow: hidden; 
+        animation: bounce-slow 3s ease-in-out infinite;
+        z-index: 10;
+      ">
+    
+    <!-- Outer Neon Glow -->
+    <div style="
+          position: absolute; 
+          top: -0.75rem; left: -0.75rem; right: -0.75rem; bottom: -0.75rem; 
+          border-radius: 50% / 40%; 
+          background: linear-gradient(45deg, #FACC15, #FBBF24); 
+          box-shadow: 0 0 50px rgba(255,255,0,0.8);
+          opacity: 0.8;
+          animation: pulse 2s ease-in-out infinite;
+        "></div>
+    
+    <!-- Inner Border Glow -->
+    <div style="
+          position: absolute; 
+          top: 0.125rem; left: 0.125rem; right: 0.125rem; bottom: 0.125rem; 
+          border-radius: 50% / 40%; 
+          border: 6px solid #FCD34D; 
+          box-shadow: 0 0 25px rgba(255,255,200,0.7);
+        "></div>
+    
+    <!-- Profile Image -->
+    <img src="images/profile.jpg" alt="Hero" style="
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          border-radius: 50% / 40%; 
+          position: relative; 
+          z-index: 10; 
+          transition: transform 0.3s ease-in-out;
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+  </div>
+</div>
+
+<!-- Inline CSS Animations -->
+<style>
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes float-shape {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(15deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+</style>
+
+
+
+
+
+      </section>
+
+  <!-- Services -->
+<section id="services" class="max-w-6xl mx-auto py-16 px-4 md:px-8">
+  <h2 class="text-4xl md:text-5xl font-bold text-center text-yellow-500 mb-12 fade-up">What I Do</h2>
+
+ <div class="stagger-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <!-- Service 1 -->
+    <article class="card p-8 bg-white dark:bg-surface rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="50">
+      <div class="flex items-center gap-5 mb-6">
+        <div class="p-4 bg-yellow-100 text-yellow-600 rounded-xl shadow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.567-3 3.5S10.343 15 12 15s3-1.567 3-3.5S13.657 8 12 8z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.341A8 8 0 1112 4v4" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Quality Assurance & Testing</h4>
+      </div>
+      <p class="text-gray-600 dark:text-muted mb-4">Ensuring flawless performance, usability, and reliability across all platforms.</p>
+      <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-muted text-lg">
+        <li>Manual and automated testing (Selenium, test frameworks).</li>
+        <li>Bug tracking, debugging, and performance checks.</li>
+        <li>Delivering high-quality, error-free software.</li>
+      </ul>
+    </article>
+
+    <!-- Service 2 -->
+    <article class="card p-8 bg-white dark:bg-surface rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex items-center gap-5 mb-6">
+        <div class="p-4 bg-yellow-100 text-yellow-600 rounded-xl shadow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v4a1 1 0 001 1h3m10-5h3a1 1 0 011 1v4m-5 5h-4a1 1 0 01-1-1v-3m-5 0H4a1 1 0 01-1-1v-4m12 5v-4" />
+          </svg>
+        </div>
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Front-End Development</h4>
+      </div>
+      <p class="text-gray-600 dark:text-muted mb-4">Building engaging, responsive interfaces that users love.</p>
+      <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-muted text-lg">
+        <li>Responsive web design with HTML, CSS, Tailwind, and JS.</li>
+        <li>Interactive UI/UX with modern frameworks (React, Vue).</li>
+        <li>Optimized for performance, accessibility, and SEO.</li>
+      </ul>
+    </article>
+
+    <!-- Service 3 -->
+  <article class="card p-8 bg-white dark:bg-surface rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2" data-aos="fade-up" data-aos-delay="150">
+  <div class="flex items-center gap-5 mb-6">
+    <div class="p-4 bg-yellow-100 text-yellow-600 rounded-xl shadow">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6h13M5 6H4a2 2 0 00-2 2v13a2 2 0 002 2h13a2 2 0 002-2v-1" />
+      </svg>
+    </div>
+    <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Business Analysis & Reporting</h4>
+  </div>
+  <p class="text-gray-600 dark:text-muted mb-4">Bridging the gap between business needs and technology solutions through insights and analysis.</p>
+  <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-muted text-lg">
+    <li>Gathering and analyzing business requirements.</li>
+    <li>Creating dashboards and reports for stakeholders.</li>
+    <li>Collaborating with teams to improve processes and outcomes.</li>
+  </ul>
+</article>
+
+
+  </div>
+</section>
+
+
+<!-- Resume -->
+<!-- Resume -->
+ <section id="resume" class="py-12 max-w-4xl mx-auto px-4">
+  <h2 class="text-4xl md:text-5xl font-bold text-center text-yellow-500 mb-12 fade-up" data-aos="fade-up">Resume</h2>
+
+  <div class="relative flex flex-col lg:flex-row lg:gap-12">
+    <!-- Vertical line -->
+    <div class="hidden lg:flex flex-col items-center relative w-12">
+      <div class="timeline-line absolute w-1 bg-gray-300 top-0 bottom-0 left-1/2 -translate-x-1/2"></div>
+      <div id="timeline-ball" class="timeline-ball absolute w-4 h-4 bg-yellow-500 rounded-full left-1/2 -translate-x-1/2"></div>
+    </div>
+
+    <!-- Timeline content -->
+    <div class="flex-1 space-y-6">
+      <article class="card p-6 bg-white rounded-xl shadow timeline-item" data-ball="0%">
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Education</h4>
+        <div class="mt-3 text-m text-gray-700">
+          B.Sc.(Hons) Computing & Information Systems (2023 - Present)
+          <br>Sabaragamuwa University of Sri Lanka
+          <br>Studies at Faculty of Computing
+        </div>
+        <br><br>
+        <div class="mt-3 text-m text-gray-700">
+          G.C.E. Advanced Level Examination (2013 - 2020)
+          <br>Siridhamma College, Galle
+          <br>Physical Science Stream - 1B 2C's
+        </div>
+      </article>
+
+      <article class="card p-6 bg-white rounded-xl shadow timeline-item" data-ball="50%">
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Awards & Certificates</h4>
+        <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+          <li>Brainstorm 2025 - Semi Finalist (University of Moratuwa)</li>
+          <li>Certificate of Participation - IX24</li>
+         
+        </ul>
+      </article>
+
+      <article class="card p-6 bg-white rounded-xl shadow timeline-item" data-ball="100%">
+        <h4 class="text-2xl font-bold text-gray-900 dark:text-text">Volunteering</h4>
+        <p class="mt-2 text-sm text-gray-700">
+          Content Creation Volunteer, IEEE Student Branch, Sabaragamuwa University </p>
+        <p class="mt-2 text-sm text-gray-700">
+          Secretary Team Member, SabraXtreme 3.0, IEEE Student Branch of SUSL
+        </p>
+        <p class="mt-2 text-sm text-gray-700">
+          Secretary Team Member, IEEE Day Celebration 2025, IEEE Student Branch of SUSL
+        </p>
+        <p class="mt-2 text-sm text-gray-700">
+         Logistics Team Member, GeekZone v1.0, IEEE Student Branch of SUSL
+        </p>
+        <p class="mt-2 text-sm text-gray-700">
+          Secretary Team Member, HOPE 2.0, IEEE Student Branch of SUSL
+        </p>
+        <p class="mt-2 text-sm text-gray-700">
+          Content Team Member, STEMUP AI
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+    <aside class="space-y-6">
+      <!-- Skills -->
+      <!-- Skills -->
+       <section id="skills" class="py-12 max-w-6xl mx-auto px-4 md:px-8">
+<div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition" data-aos="fade-left">
+  <h4 class="text-4xl md:text-5xl font-bold text-center text-yellow-500 mb-12 fade-up">Skills</h4>
+  <div class="mt-3 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 skill-grid">
+    
+    <!-- Java -->
+    <div class="skill-item text-center group relative">
+  <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+    <img src="https://www.svgrepo.com/show/303388/java-4-logo.svg" alt="Java icon" class="skill-icon w-8 h-8 mx-auto"/>
+  </div>
+  <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+    Java
+  </div>
+</div>
+
+
+    <!-- JavaScript -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/javascript" alt="JavaScript icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">JavaScript</div>
+    </div>
+
+    <!-- Postman -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/postman" alt="Postman icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Postman</div>
+    </div>
+
+    <!-- React -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/react" alt="React icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">React</div>
+    </div>
+
+    <!-- Express -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/express" alt="Express icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Express</div>
+    </div>
+
+    <!-- Node.js -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Node.js</div>
+    </div>
+
+    <!-- MongoDB -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">MongoDB</div>
+    </div>
+
+    <!-- Selenium -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/selenium" alt="Selenium icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Selenium</div>
+    </div>
+
+    <!-- MySQL -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/mysql" alt="MySQL icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">MySQL</div>
+    </div>
+
+    <!-- Git -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/git" alt="Git icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Git</div>
+    </div>
+
+    <!-- HTML5 -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/html5" alt="HTML5 icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">HTML5</div>
+    </div>
+
+    <!-- CSS3 -->
+   <div class="skill-item text-center group relative">
+  <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+    <img src="https://www.svgrepo.com/show/452185/css-3.svg" alt="CSS3 icon" class="skill-icon w-8 h-8 mx-auto"/>
+  </div>
+  <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+    CSS3
+  </div>
+</div>
+
+
+    <!-- Figma -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <img src="https://cdn.simpleicons.org/figma" alt="Figma icon" class="skill-icon w-8 h-8 mx-auto"/>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Figma</div>
+    </div>
+
+    <!-- JUnit -->
+    <div class="skill-item text-center group relative">
+      <div class="skill-badge rounded-full p-3 bg-yellow-100 dark:bg-yellow-900/40 shadow transition transform group-hover:scale-110">
+        <svg class="skill-icon w-8 h-8 mx-auto" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="3" fill="currentColor" opacity="0.06" />
+          <text x="50%" y="62%" text-anchor="middle" font-family="sans-serif" font-size="10" fill="currentColor">J</text>
+        </svg>
+      </div>
+      <div class="text-xs text-gray-600 dark:text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">JUnit</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+      <!-- Gallery -->
+       <section id="gallery" class="py-12 max-w-6xl mx-auto px-4 md:px-8">
+  <h3 class="text-4xl md:text-5xl font-bold text-center text-yellow-500 mb-12 fade-up" data-aos="fade-up">Volunteering Gallery</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    
+    <!-- Image 1 -->
+    <div class="relative group overflow-hidden rounded-lg shadow-lg">
+      <img src="images/hope2.0.jpg" 
+           class="w-full h-60 md:h-72 object-cover transition-transform duration-300 transform group-hover:scale-105" alt="gallery 1" />
+      <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span class="text-white text-lg md:text-xl font-semibold">Hope 2.0</span>
+      </div>
+    </div>
+
+    <!-- Image 2 -->
+    <!-- TechTalk Slideshow -->
+<div id="techtalk-slideshow" class="relative group overflow-hidden rounded-lg shadow-lg w-full h-60 md:h-72">
+  <img src="images/Techtalk1.jpeg" 
+       class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" 
+       alt="TechTalk 1" />
+  <img src="images/Techtalk2.jpeg" 
+       class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" 
+       alt="TechTalk 2" />
+
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <span class="text-white text-lg md:text-xl font-semibold">TechTalk</span>
+  </div>
+</div>
+
+<script>
+  const techTalkSlides = document.querySelectorAll("#techtalk-slideshow img");
+  let currentSlide = 0;
+
+  setInterval(() => {
+    // Hide current
+    techTalkSlides[currentSlide].classList.remove("opacity-100");
+    techTalkSlides[currentSlide].classList.add("opacity-0");
+
+    // Next slide
+    currentSlide = (currentSlide + 1) % techTalkSlides.length;
+
+    // Show next
+    techTalkSlides[currentSlide].classList.remove("opacity-0");
+    techTalkSlides[currentSlide].classList.add("opacity-100");
+  }, 2000); // Change every 2 seconds
+</script>
+
+
+    <!-- Image 3 -->
+    <div class="relative group overflow-hidden rounded-lg shadow-lg">
+      <img src="images/Geekzone.jpeg" 
+           class="w-full h-60 md:h-72 object-cover transition-transform duration-300 transform group-hover:scale-105" alt="gallery 3" />
+           
+      <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span class="text-white text-lg md:text-xl font-semibold">GeekZone v1.0</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+      <!-- Projects -->
+      <section id="projects" class="py-12">
+        <h3 class="text-4xl md:text-5xl font-bold text-center text-yellow-500 mb-12 fade-up" data-aos="fade-up">Projects</h3>
+  <div id="projects-grid" class="stagger-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Project card -->
+          <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="50">
+            <img src="images/NovaScript.png" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h2 class="font-semibold">"NovaScript" <br> AI Driven Research Management System</h2>
+              <p class="text-sm text-gray-600 mt-2">A full-stack web application that allows researchers to publish research papers, create surveys, and analyze the results. It also enables users to participate in surveys and access research papers.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/Chandima0406/NovaScript.git" class="text-yellow-600 text-sm">View →</a>
+                <div class="text-xs text-gray-500"> • React • Node.js, Express • MongoDB • Gemini API </div>
+              </div>
+            </div>
+           
+          </div>
+
+          <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <img src="images/selenium1.png" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h4 class="font-semibold">"Automation Testing Practice"</h4>
+              <p class="text-sm text-gray-600 mt-2">Hands-on Selenium WebDriver exercises in Java, covering website launching, form elements, alerts, mouse actions, web tables, sliders, scrolling, and screenshots.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/s-vidu/selenium-java-practice.git" class="text-yellow-600 text-sm">View →</a>
+                <div class="text-xs text-gray-500"> • Selenium • Java</div>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="150">
+            <img src="images/API testing.png" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h4 class="font-semibold">"NovaScript API Testing"</h4>
+              <p class="text-sm text-gray-600 mt-2">Postman-based API testing for NovaScript, a full-stack research management platform. Includes test cases for user authentication, project management and survey handling.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/s-vidu/NovaScript_API_Testings.git" class="text-yellow-600 text-sm">View →</a>
+                <div class="text-xs text-gray-500"> • Postman</div>
+              </div>
+            </div>
+           
+            
+        </div>
+
+        <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <img src="images/art.jpeg" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h4 class="font-semibold">"Sabra-Music"</h4>
+              <p class="text-sm text-gray-600 mt-2">A web application built with Laravel (Blade templates for frontend) to manage art center bookings.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/Piumalhk/Sabra-Music.git" class="text-yellow-600 text-sm">View →</a>
+                <div class="text-xs text-gray-500"> • Laravel • HTML • JavaScript • PHP • MySDL</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <img src="images/testleaf.png" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h4 class="font-semibold">"Testleaf"</h4>
+              <p class="text-sm text-gray-600 mt-2">Automated test scripts using Selenium WebDriver and TestNG, built with Java and Maven, to validate web application functionalities such as link verification, page navigation, and UI testing.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/s-vidu/selenium_practice_2.git" class="text-yellow-600 text-sm">View →</a>
+                <div class="text-xs text-gray-500"> • Selenium • Java • TestNG </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="card bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <img src="images/solidW.png" class="w-full h-40 object-cover" alt="project" />
+            <div class="p-4 card-inner">
+              <h4 class="font-semibold">"Solid Weddings"</h4>
+              <p class="text-sm text-gray-600 mt-2">A full-stack platform for online bookings, package browsing, and client communication, including secure, password-protected galleries for clients to access and share photos, and a digital portfolio to showcase work and enhance brand professionalism.</p>
+              <div class="mt-4 flex items-center justify-between">
+                <a href="https://github.com/Sachindu-Nethmin/solidweddings.git">View →</a>
+                <div class="text-xs text-gray-500"> • React • Node.js, Express • MongoDB  </div>
+              </div>
+            </div>
+
+          </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="py-12">
+        <h3 class="text-4xl md:text-5xl font-bold text-left text-yellow-500 mb-12 fade-up" data-aos="fade-up">Contact Me</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="md:col-span-2">
+            <form id="contact-form" class="space-y-4 bg-white p-6 rounded-xl shadow" data-aos="fade-up">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <input required name="name" type="text" placeholder="Your name" 
+         class="w-full p-3 rounded border border-white/30 bg-white/20 backdrop-blur-md placeholder-gray-600 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+  <input required name="email" type="email" placeholder="Email" 
+         class="w-full p-3 rounded border border-white/30 bg-white/20 backdrop-blur-md placeholder-gray-600 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+</div>
+
+<textarea required name="message" rows="6" placeholder="Message" 
+          class="w-full p-3 rounded border border-white/30 bg-white/20 backdrop-blur-md placeholder-gray-600 text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+
+              <div class="flex items-center justify-between">
+                <button type="submit" 
+        class="px-4 py-2 rounded bg-white/20 backdrop-blur-md border border-white/30 text-yellow-600 hover:bg-white/30 hover:shadow-lg transition">
+  Send Message
+</button>
+
+                <div id="form-result" class="text-sm text-green-600 hidden">Thanks — I'll get back to you soon.</div>
+              </div>
+            </form>
+          </div>
+
+          <aside class="space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow" data-aos="fade-left">
+              <h4 class="font-semibold">Get in touch</h4>
+              <p class="text-sm text-gray-600 mt-2">Email: <a href="mailto:vidumalid@gmail.com" class="text-yellow-600">vidumalid@gmail.com</a></p>
+              <p class="text-sm text-gray-600">Location: Galle, Sri Lanka</p>
+              <div class="mt-4 flex gap-3">
+                <a aria-label="Instagram" href="https://www.instagram.com/s_.vidu._?igsh=OW91ZWdjanppaWpi" class="text-yellow-600 hover:text-yellow-500">Instagram</a>
+                <a aria-label="GitHub" href="https://github.com/s-vidu" class="text-yellow-600 hover:text-yellow-500">GitHub</a>
+                <a aria-label="LinkedIn" href="www.linkedin.com/in/vidumali-dahanayake-50693a255" class="text-yellow-600 hover:text-yellow-500">LinkedIn</a>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow" data-aos="fade-left" data-aos-delay="50">
+              <h4 class="font-semibold">Availability</h4>
+              <p class="text-sm text-gray-600 mt-2">Open for freelance and full-time roles.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-12 py-8 text-center text-sm text-gray-500">
+      © <span id="year"></span> Vidumali Dahanayake — All Rights Reserved.
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+ 
+<style>
+  @keyframes goldenGlow {
+    0%, 100% {
+      box-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 20px #FFD700;
+    }
+    50% {
+      box-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700, 0 0 40px #FFD700;
+    }
+  }
+
+  .golden-glow-badge {
+    background-color: #000; /* black background */
+    animation: goldenGlow 2s infinite ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .golden-glow-badge:hover {
+    transform: scale(1.1); /* enlarge slightly on hover */
+    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+  }
+</style>
+
+<script>
+const ball = document.getElementById("timeline-ball");
+const items = document.querySelectorAll(".timeline-item");
+
+window.addEventListener("scroll", () => {
+  const scrollPos = window.scrollY + window.innerHeight / 2; // center of viewport
+
+  items.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    const itemTop = rect.top + window.scrollY;
+    const itemBottom = itemTop + rect.height;
+
+    if (scrollPos >= itemTop && scrollPos < itemBottom) {
+      const position = item.dataset.ball;
+      ball.style.top = position;
+    }
+  });
+});
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
